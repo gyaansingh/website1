@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gyaan Singh Website Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .chat-container {
+            width: 300px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .chat-box {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+        }
+        .input-box {
+            display: flex;
+            align-items: center;
+        }
+        .input-box input {
+            width: 100%;
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .input-box button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .input-box button:hover {
+            background-color: #0056b3;
+        }
+        .chat-message {
+            margin-bottom: 10px;
+        }
+        .bot-message {
+            color: #007bff;
+        }
+        .user-message {
+            text-align: right;
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-box" id="chatBox">
+            <div class="chat-message bot-message">Hey, welcome to the <strong>Gyaan Singh website!</strong> How can I help you?</div>
+            <div class="chat-message bot-message">Do you want to become:</div>
+            <div class="chat-message bot-message">
+                <button onclick="selectOption('engineer')">Engineer</button>
+                <button onclick="selectOption('doctor')">Doctor</button>
+                <button onclick="selectOption('police')">Police Officer</button>
+            </div>
+        </div>
+        <div class="input-box">
+            <input type="text" id="userInput" placeholder="Type here..." disabled>
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const userInput = document.getElementById("userInput").value;
+            if (userInput.trim() !== "") {
+                addMessage(userInput, "user");
+                document.getElementById("userInput").value = "";
+            }
+        }
+
+        function selectOption(option) {
+            let message = "";
+            if (option === "engineer") {
+                message = `
+                    That’s awesome! Becoming an engineer requires hard work and dedication. Here are the steps:
+                    1. Complete your high school education with a focus on mathematics and science.
+                    2. Pursue a bachelor’s degree in engineering (e.g., Mechanical, Civil, Electrical).
+                    3. Gain practical experience through internships.
+                    4. Consider pursuing a master’s degree or certifications depending on your specialization.
+                    5. Start applying for engineering jobs and keep learning new skills.
+                    Click ‘OK’ to continue or type something else to ask me more.
+                `;
+            } else if (option === "doctor") {
+                message = `
+                    Great choice! Becoming a doctor is a noble profession. Here are the steps:
+                    1. Complete your high school education with a focus on biology, chemistry, and physics.
+                    2. Get a bachelor’s degree, usually in pre-med or a related field.
+                    3. Attend medical school for a professional medical degree (MBBS, MD).
+                    4. Complete your internship and residency program.
+                    5. Take licensing exams and become a licensed doctor.
+                    6. Start practicing in your chosen field of medicine (e.g., surgery, pediatrics).
+                    Click ‘OK’ to continue or type something else to ask me more.
+                `;
+            } else if (option === "police") {
+                message = `
+                    Serving as a police officer is a great way to protect and serve your community. Here are the steps:
+                    1. Complete your high school education with a focus on criminal justice and physical fitness.
+                    2. Attend a police academy to receive training in law enforcement.
+                    3. Gain experience by working as a patrol officer.
+                    4. Consider further training or specialization in areas such as detective work, forensics, or SWAT.
+                    5. Continue to maintain physical fitness and professional development.
+                    Click ‘OK’ to continue or type something else to ask me more.
+                `;
+            }
+            addMessage(message, "bot");
+            document.getElementById("userInput").disabled = false;
+            document.getElementById("userInput").focus();
+        }
+
+        function addMessage(message, sender) {
+            const chatBox = document.getElementById("chatBox");
+            const messageDiv = document.createElement("div");
+            messageDiv.classList.add("chat-message");
+            messageDiv.classList.add(sender === "user" ? "user-message" : "bot-message");
+            messageDiv.innerHTML = message;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    </script>
+</body>
+</html>

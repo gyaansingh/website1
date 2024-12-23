@@ -1,0 +1,124 @@
+<html>
+<head>
+    <title>Weight Loss App</title>
+    <style>
+        .container {
+            max-width: 400px;
+            margin: 0;
+            text-align: center;
+        }
+
+        .input-container {
+            margin-bottom: 20px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid pink;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: green;
+            color: pink;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: white;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        #timetable {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        #timetable ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #timetable ul li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Weight Loss Tracker</h1>
+        
+        <div class="input-container">
+            <label for="current-weight">Current weight (lbs):</label>
+            <input type="number" id="current-weight">
+        </div>
+        
+        <div class="input-container">
+            <label for="target-weight">Target weight (lbs):</label>
+            <input type="number" id="target-weight">
+        </div>
+        
+        <button onclick="calculate()">Calculate</button>
+        
+        <div id="result"></div>
+        <div id="timetable"></div>
+    </div>
+
+    <script>
+        function calculate() {
+            var currentWeight = document.getElementById("current-weight").value;
+            var targetWeight = document.getElementById("target-weight").value;
+
+            if (currentWeight === "" || targetWeight === "") {
+                alert("Please enter both current and target weight.");
+                return;
+            }
+
+            currentWeight = parseFloat(currentWeight);
+            targetWeight = parseFloat(targetWeight);
+
+            if (isNaN(currentWeight) || isNaN(targetWeight)) {
+                alert("Please enter valid numbers for weight.");
+                return;
+            }
+
+            var weightToLose = currentWeight - targetWeight;
+            var daysToReachGoal = Math.ceil(weightToLose / 1.5); // Assuming 1.5 lbs of weight loss per week
+
+            document.getElementById("result").innerHTML = "You need to lose " + weightToLose.toFixed(2) + " lbs. It will take approximately " + daysToReachGoal + " days to reach your goal.";
+
+            var weeksToReachGoal = Math.ceil(daysToReachGoal / 7);
+
+            var timetable = document.getElementById("timetable");
+            timetable.innerHTML = "<h2>Timetable</h2>";
+            var timetableList = document.createElement("ul");
+            for (var i = 1; i <= weeksToReachGoal; i++) {
+                var listItem = document.createElement("li");
+                var weekMessage = "Week " + i + ": ";
+                if (i % 2 === 0) {
+                    weekMessage += "Focus on cardio exercises like running, cycling, or swimming. ";
+                } else {
+                    weekMessage += "Incorporate strength training exercises such as weightlifting or bodyweight exercises. ";
+                }
+                if (i % 3 === 0) {
+                    weekMessage += "Increase intake of vegetables, fruits, and lean proteins while reducing processed foods and sugary drinks.";
+                } else {
+                    weekMessage += "Follow a balanced diet with portion control and avoid high-calorie snacks.";
+                }
+                listItem.textContent = weekMessage;
+                timetableList.appendChild(listItem);
+            }
+            timetable.appendChild(timetableList);
+        }
+    </script>
+</body>
+</html>
